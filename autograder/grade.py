@@ -5,19 +5,20 @@ import os
 import subprocess
 import sys
 import json
-from datetime import datetime, timedelta
+from datetime import datetime
 from pathlib import Path
 from typing import List, Set
+from datetime import datetime
+import csv
 
 from zoneinfo import ZoneInfo
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 SUBMISSIONS_DIR = REPO_ROOT / "submissions"
-RESULTS_FILE = None
 
 # Student IDs: PY102001001 .. PY102001020
 ID_PREFIX = "PY102001"
-MIN_ID = 1
+MIN_ID = 0
 MAX_ID = 44
 
 # Allowed lab filenames
@@ -60,7 +61,6 @@ def run(cmd: List[str]) -> str:
         print("Command failed:", " ".join(cmd))
         print(p.stdout)
         print(p.stderr)
-        sys.exit(p.returncode)
     return p.stdout.strip()
 
 
@@ -152,7 +152,6 @@ def apply_late_policy(
         messages.append("✅ No late deduction applied")
 
     return final_score, messages
-
 
 def main() -> None:
     base_ref = os.environ.get("BASE_REF", "main")
@@ -267,8 +266,14 @@ def main() -> None:
         print(" -", msg)
 
     print(f"FINAL SCORE: {final_score}/{max_points}")
+    results["final_score"] = final_score
+    results["submitted_at"] = submitted_at.isoformat() if submitted_at else None
+    results["late_messages"] = late_messages
+
+    results_file.write_text(json.dumps(results, indent=2), encoding="utf-8")
     sys.exit(0)
 
 
 if __name__ == "__main__":
     main()
+    sys.exit(0)

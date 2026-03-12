@@ -1,8 +1,8 @@
-# Instructor-only model solution
-submissions/PY102001000/
-
 # Developer tools
 tools/
+grades/
 
 # Stop tracking
 .DS_Store
+.pytest_cache
+.venv

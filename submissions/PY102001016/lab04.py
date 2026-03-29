@@ -68,19 +68,6 @@ def build_submission_tree(base_path: str, folder1: str, folder2: str) -> TreeNod
     root.right.left = TreeNode('lab01.py')
     root.right.right = TreeNode('lab02.py')
 =======
-    root = TreeNode(base_path)
-
-    node1 = TreeNode(folder1)
-    node2 = TreeNode(folder2)
-
-    root.left = node1
-    root.right = node2
-
-    node1.left = TreeNode('lab00.py')
-    node1.right = TreeNode('lab01.py')
-
-    node2.left = TreeNode('lab00.py')
-    node2.right = TreeNode('lab01.py')
 >>>>>>> upstream/main
 
     return root
@@ -146,11 +133,5 @@ def find_py_files(root: TreeNode) -> list[str]:
 
     return result
 =======
-        elif node.endswith('.py'):
-            result.append(current_folder+'/'+node)
-            
-        else:
-            current_folder= node
 
-    return result
 >>>>>>> upstream/main
